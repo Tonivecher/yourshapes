@@ -76,7 +76,17 @@ const MaterialsSection = () => {
       className="py-24 md:py-32 bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-zinc-100 relative overflow-hidden"
       style={{ fontFamily: '"Cormorant Garamond", serif' }}
     >
-      <div className="container mx-auto px-6">
+      <video
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
+        <source src="/videos/about3.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" aria-hidden="true" />
+      <div className="container relative z-10 mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-20 text-center text-zinc-200">
           Технологии и материалы
         </h2>
