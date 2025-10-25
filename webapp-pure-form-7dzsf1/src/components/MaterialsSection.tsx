@@ -1,6 +1,15 @@
 import { useEffect, useRef } from 'react';
 import anime from 'animejs';
 
+const resolveAssetPath = (path: string) => {
+  const base = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL ?? '/';
+  const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+  return `${normalizedBase}/${path.replace(/^\/+/, '')}`;
+};
+
+const VIDEO_BACKGROUND_SRC = resolveAssetPath('videos/about3.mp4');
+const VIDEO_POSTER_SRC = resolveAssetPath('images/about-bg-fallback.jpg');
+
 interface Material {
   id: string;
   title: string;
@@ -37,9 +46,10 @@ const materials: Material[] = [
 
 const MaterialsSection = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    if (!sectionRef.current) return;
+    if (typeof window === 'undefined' || !sectionRef.current) return;
 
     const cards = sectionRef.current.querySelectorAll<HTMLDivElement>('.material-card');
 
@@ -69,6 +79,55 @@ const MaterialsSection = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.defaultMuted = true;
+    video.muted = true;
+    video.playsInline = true;
+
+    let retryTimeout: number | undefined;
+    let cancelled = false;
+
+    const tryPlay = () => {
+      if (cancelled) return;
+      const playback = video.play();
+      if (playback && typeof playback.catch === 'function') {
+        playback.catch(() => {
+          if (cancelled) return;
+          retryTimeout = window.setTimeout(tryPlay, 400);
+        });
+      }
+    };
+
+    let cleanup: (() => void) | undefined;
+
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      tryPlay();
+    } else {
+      const handleCanPlay = () => {
+        video.removeEventListener('canplay', handleCanPlay);
+        tryPlay();
+      };
+
+      video.addEventListener('canplay', handleCanPlay, { once: true });
+      cleanup = () => {
+        video.removeEventListener('canplay', handleCanPlay);
+      };
+    }
+
+    return () => {
+      cancelled = true;
+      if (retryTimeout !== undefined) {
+        window.clearTimeout(retryTimeout);
+      }
+      cleanup?.();
+    };
+  }, []);
+
   return (
     <section
       id="materials"
@@ -76,14 +135,23 @@ const MaterialsSection = () => {
       className="py-24 md:py-32 bg-gradient-to-b from-zinc-950 via-zinc-900 to-black text-zinc-100 relative overflow-hidden"
       style={{ fontFamily: '"Cormorant Garamond", serif' }}
     >
+      <div
+        className="absolute inset-0 h-full w-full bg-cover bg-center opacity-60"
+        style={{ backgroundImage: `url("${VIDEO_POSTER_SRC}")` }}
+        aria-hidden="true"
+      />
       <video
+        ref={videoRef}
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
         autoPlay
         loop
         muted
         playsInline
+        preload="auto"
+        poster={VIDEO_POSTER_SRC}
+        aria-hidden="true"
       >
-        <source src="/videos/about3.mp4" type="video/mp4" />
+        <source src={VIDEO_BACKGROUND_SRC} type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" aria-hidden="true" />
       <div className="container relative z-10 mx-auto px-6">
