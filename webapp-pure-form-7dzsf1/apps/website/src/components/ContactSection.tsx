@@ -46,7 +46,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 bg-background">
+    <section id="contact" data-animate className="py-24 md:py-32 bg-background">
       <div className="container mx-auto px-6">
         <h2 className="text-2xl md:text-3xl font-light uppercase tracking-wider mb-16 text-center">
           Связаться

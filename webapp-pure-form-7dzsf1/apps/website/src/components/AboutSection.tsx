@@ -1,15 +1,22 @@
-import React from 'react';
+import { useRef } from 'react';
 import { withBase } from '@/lib/utils';
+import { useAutoplayVideo } from '@/hooks/useAutoplayVideo';
 
 const AboutSection = () => {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useAutoplayVideo(videoRef);
+
   return (
     <section
       id="about"
+      data-animate
       className="relative overflow-hidden py-24 md:py-32 bg-black text-zinc-100 font-sans"
     >
       {/* --- Background video layer --- */}
       <div className="absolute inset-0 -z-10">
         <video
+          ref={videoRef}
           className="h-full w-full object-cover"
           autoPlay
           muted

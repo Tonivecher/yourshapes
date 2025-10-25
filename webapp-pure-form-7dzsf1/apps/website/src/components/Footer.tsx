@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="py-12 bg-background border-t border-border/30">
+    <footer data-animate className="py-12 bg-background border-t border-border/30">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo */}

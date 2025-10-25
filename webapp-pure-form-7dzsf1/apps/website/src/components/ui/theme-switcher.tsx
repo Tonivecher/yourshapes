@@ -80,9 +80,7 @@ export function ThemeSwitcher() {
     const root = document.documentElement;
     
     // Remove existing theme classes
-    themes.forEach(t => {
-      root.removeAttribute(`data-theme`);
-    });
+    root.removeAttribute('data-theme');
     
     // Apply new theme
     root.setAttribute('data-theme', theme);

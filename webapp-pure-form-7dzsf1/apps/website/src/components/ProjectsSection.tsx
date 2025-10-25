@@ -19,22 +19,58 @@ export default function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const images = containerRef.current?.querySelectorAll(".project-card");
-    if (images) {
-      anime({
-        targets: images,
-        opacity: [0, 1],
-        translateY: [50, 0],
-        scale: [0.95, 1],
-        delay: anime.stagger(150),
-        duration: 1000,
-        easing: "easeOutQuad",
-      });
+    const images = containerRef.current?.querySelectorAll<HTMLElement>(".project-card");
+    if (!images || images.length === 0) {
+      return;
     }
+
+    const prefersReducedMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      images.forEach((image) => {
+        image.style.opacity = "1";
+        image.style.transform = "translate3d(0, 0, 0)";
+      });
+      return;
+    }
+
+    images.forEach((image) => {
+      image.style.opacity = "0";
+      image.style.transform = "translate3d(0, 50px, 0)";
+      image.style.willChange = "transform, opacity";
+    });
+
+    anime({
+      targets: images,
+      opacity: [0, 1],
+      translateY: [50, 0],
+      scale: [0.95, 1],
+      delay: anime.stagger(150),
+      duration: 1000,
+      easing: "easeOutQuad",
+      complete: () => {
+        images.forEach((image) => {
+          image.style.willChange = "";
+          image.style.transform = "";
+        });
+      },
+    });
+
+    return () => {
+      images.forEach((image) => {
+        image.style.willChange = "";
+      });
+    };
   }, []);
 
   return (
-    <section className="py-20 bg-neutral-950 text-white overflow-x-hidden font-[Manrope]">
+    <section
+      id="projects"
+      data-animate
+      className="py-20 bg-neutral-950 text-white overflow-x-hidden font-[Manrope]"
+    >
       <h2 className="text-3xl font-light mb-10 text-center uppercase tracking-widest">
         Projects
       </h2>

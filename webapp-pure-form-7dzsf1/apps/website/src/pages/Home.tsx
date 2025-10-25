@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { onScroll } from 'animejs';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
@@ -32,6 +33,24 @@ export default function Home() {
     
     // Set page title
     document.title = 'Инженерия формы — студия архитектурного дизайна и производства';
+  }, []);
+
+  useEffect(() => {
+    const cleanup = onScroll({
+      selector: '[data-animate]',
+      translateY: 36,
+      opacity: 0,
+      duration: 800,
+      easing: 'easeOutQuad',
+      threshold: 0.12,
+      rootMargin: '0px 0px -10% 0px',
+    });
+
+    return () => {
+      if (cleanup) {
+        cleanup();
+      }
+    };
   }, []);
 
   return (

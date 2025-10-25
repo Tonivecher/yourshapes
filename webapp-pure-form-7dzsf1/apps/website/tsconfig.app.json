@@ -14,7 +14,8 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "animejs": ["./src/lib/animejs-wrapper"]
     }
   },
   "include": ["src"]

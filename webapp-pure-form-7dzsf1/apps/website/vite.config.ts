@@ -16,9 +16,10 @@ export default defineConfig(({ mode }) => {
     ],
     base: normalizedBase,
     resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "./src"),
-      },
+      alias: [
+        { find: "@", replacement: path.resolve(__dirname, "./src") },
+        { find: /^animejs$/, replacement: path.resolve(__dirname, "./src/lib/animejs-wrapper") },
+      ],
     },
     define: {
       '__IS_SANDBOX__': JSON.stringify(isDevelopment),
