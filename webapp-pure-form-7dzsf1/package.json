@@ -1,0 +1,19 @@
+{
+    "name": "webapp-bun-monorepo-v1",
+    "version": "0.0.1",
+    "description": "Webapp Bun Monorepo V1",
+    "private": true,
+    "scripts": {
+        "dev": "bun run dev:website",
+        "dev:website": "cd apps/website && bun run dev",
+        "build:website": "cd apps/website && bun run build",
+        "build:website:dev": "cd apps/website && bun run build:dev",
+        "preview:website": "cd apps/website && bun run preview"
+    },
+    "workspaces": [
+        "apps/*"
+    ],
+    "devDependencies": {
+        "@types/node": "^24.0.15"
+    }
+}

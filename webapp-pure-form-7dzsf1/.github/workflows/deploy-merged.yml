@@ -1,0 +1,93 @@
+name: Deploy Merged Firebase
+'on':
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Define common environment variables to avoid repetition
+env:
+  VITE_APP_NAME: ${{ vars.VITE_APP_NAME || 'Golex.AI' }}
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy_firestore: ${{ vars.ENABLE_FIRESTORE != '' }}
+      should_deploy_hosting: ${{ vars.ENABLE_FIREBASE_HOSTING != '' }}
+    steps:
+      - name: Notify deployment start
+        run: |
+          curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.WEBHOOK_TOKEN }}" -d '{"status":"start","webapp":"${{ secrets.WEBAPP_ID }}"}' ${{ secrets.WEBHOOK_URL }}
+
+  build_website:
+    needs: setup
+    runs-on: ubuntu-latest
+    # Only build if we need it for any deployment job
+    if: ${{ always() }}
+    outputs:
+      build_status: ${{ job.status }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+      
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/package.json', '**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+      
+      - name: Install dependencies
+        run: 'bun install'
+      
+      - name: Build website
+        run: 'bun run build:website'
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-build
+          path: apps/website/dist
+          retention-days: 1
+
+  deploy_bundle:
+    needs: [setup, build_website]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: website-build
+          path: apps/website/dist
+      
+      - id: 'auth'
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+      
+      - name: 'Set up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v2
+      
+      - name: 'Copy to Storage'
+        run: 'gsutil -m rsync -R -d apps/website/dist gs://golex-webapp-builds/builds/${{ secrets.WEBAPP_ID }}'
+      
+      - name: Notify deployment success
+        if: success()
+        run: |
+          curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.WEBHOOK_TOKEN }}" -d '{"status":"success","webapp":"${{ secrets.WEBAPP_ID }}"}' ${{ secrets.WEBHOOK_URL }}
+      
+      - name: Notify deployment failure
+        if: failure()
+        run: |
+          curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${{ secrets.WEBHOOK_TOKEN }}" -d '{"status":"failure","webapp":"${{ secrets.WEBAPP_ID }}"}' ${{ secrets.WEBHOOK_URL }}
