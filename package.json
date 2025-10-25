@@ -1,0 +1,17 @@
+{
+  "name": "yourshapes",
+  "private": true,
+  "version": "0.0.0",
+  "description": "YourShapes monorepo",
+  "workspaces": [
+    "webapp-pure-form-7dzsf1",
+    "webapp-pure-form-7dzsf1/apps/*"
+  ],
+  "scripts": {
+    "dev": "cd webapp-pure-form-7dzsf1 && bun run dev",
+    "dev:website": "cd webapp-pure-form-7dzsf1 && bun run dev:website",
+    "build:website": "cd webapp-pure-form-7dzsf1 && bun run build:website",
+    "build:website:dev": "cd webapp-pure-form-7dzsf1 && bun run build:website:dev",
+    "preview:website": "cd webapp-pure-form-7dzsf1 && bun run preview:website"
+  }
+}
