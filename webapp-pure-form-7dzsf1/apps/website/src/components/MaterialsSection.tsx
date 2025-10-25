@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import anime from 'animejs';
+import { withBase } from '@/lib/utils';
 
 interface Material {
   id: string;
@@ -14,21 +15,21 @@ const materials: Material[] = [
     title: 'МЕТАЛЛ',
     description:
       'Лазерная точность, холодная мощь и вечная форма. Мы работаем с металлом, который подчиняется свету и идеальной геометрии. От несущих каркасов до тончайших декоративных линий — всё в балансе силы и чистоты.',
-    image: '/images/metall.png',
+    image: 'images/metall.png',
   },
   {
     id: 'wood',
     title: 'ДЕРЕВО',
     description:
       'Живой материал, дышащий временем. Массив и инженерная древесина проходят точную обработку и соединяются без швов. Мы сохраняем природное тепло и создаём поверхности, которые хочется касаться.',
-    image: '/images/wood.png',
+    image: 'images/wood.png',
   },
   {
     id: 'composite',
     title: 'КОМПОЗИТЫ',
     description:
       'Фибробетон, полимеры и новые сплавы — материалы будущего, в которых лёгкость сочетается с прочностью. Они позволяют формировать монолитные плоскости и архитектурные рельефы без компромиссов.',
-    image: '/images/compos.png',
+    image: 'images/compos.png',
   },
 ];
 
@@ -86,7 +87,7 @@ const MaterialsSection = () => {
             >
               <div className="relative aspect-[16/9] flex-shrink-0 overflow-hidden">
                 <img
-                  src={material.image}
+                  src={withBase(material.image)}
                   alt={material.title}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-\[1000ms\] group-hover:scale-110 group-hover:rotate-\[1deg\]"

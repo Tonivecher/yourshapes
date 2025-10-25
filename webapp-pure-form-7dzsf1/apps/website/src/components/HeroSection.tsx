@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { withBase } from '@/lib/utils';
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,7 +27,7 @@ const HeroSection = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url('/images/about-bg-fallback.jpg')`,
+            backgroundImage: `url("${withBase("images/about-bg-fallback.jpg")}")`,
             opacity: 0.65,
           }}
         ></div>
@@ -40,7 +41,7 @@ const HeroSection = () => {
             playsInline
             className="absolute h-full w-full object-cover opacity-70"
           >
-            <source src="/videos/about-bg.mp4" type="video/mp4" />
+            <source src={withBase("videos/about-bg.mp4")} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           

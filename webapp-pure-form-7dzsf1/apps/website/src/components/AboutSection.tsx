@@ -1,4 +1,5 @@
 import React from 'react';
+import { withBase } from '@/lib/utils';
 
 const AboutSection = () => {
   return (
@@ -16,7 +17,7 @@ const AboutSection = () => {
           playsInline
           preload="auto"
         >
-          <source src="/videos/about2.mp4" type="video/mp4" />
+          <source src={withBase("videos/about2.mp4")} type="video/mp4" />
         </video>
         {/* Тёмная подложка для контраста */}
         <div className="absolute inset-0 bg-black/60" />

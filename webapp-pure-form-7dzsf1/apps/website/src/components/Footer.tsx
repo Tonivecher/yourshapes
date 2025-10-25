@@ -28,7 +28,7 @@ const Footer = () => {
             {/* Social Icons */}
             <div className="flex space-x-4">
               <a 
-                href="/#" 
+                href="#"
                 className="text-foreground/70 hover:text-primary transition-colors"
                 aria-label="Behance"
               >
@@ -37,7 +37,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a 
-                href="/#" 
+                href="#"
                 className="text-foreground/70 hover:text-primary transition-colors"
                 aria-label="Instagram"
               >

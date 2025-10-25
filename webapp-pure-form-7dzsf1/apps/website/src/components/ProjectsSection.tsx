@@ -1,17 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import anime from "animejs";
+import { withBase } from "@/lib/utils";
 
 const imageList = [
-  { src: "/projects/P_20190127_212042.jpg", caption: "Лофт-спальня с графитовой стеной и подсветкой. Атмосфера тишины и тепла." },
-  { src: "/projects/P_20190912_004011_vHDR_On.jpg", caption: "Диванная группа с текстурным ритмом ткани — фирменный стиль Formalab." },
-  { src: "/projects/P_20180705_151636.jpg", caption: "Коридор под скатом крыши. Тёмное дерево и мягкий свет точек." },
-  { src: "/projects/IMG-20210304-WA0006.jpg", caption: "Ресторанный зал с интегрированным озеленением — природная геометрия." },
-  { src: "/projects/IMG-20210304-WA0000.jpg", caption: "Медный куб-стойка. Акцентный элемент в интерьере из камня." },
-  { src: "/projects/IMG_20171208_010952.jpg", caption: "Винный зал с латунными акцентами и стеклом — театральная тёплая атмосфера." },
-  { src: "/projects/IMG_20171207_004810.jpg", caption: "Бар Formalab: бетон, кожа и свет. Геометрия звука и пространства." },
-  { src: "/projects/P_20180414_084921.jpg", caption: "Секции ZARYAD в процессе монтажа. Структурный дизайн и точная сборка." },
-  { src: "/projects/P_20180414_084844.jpg", caption: "Рабочая зона ZARYAD. Минимализм и инженерия формы." },
-  { src: "/projects/IMG_20171208_011046.jpg", caption: "Интерьер ресторана с бархатным светом. Атмосфера завершённости." },
+  { src: "projects/P_20190127_212042.jpg", caption: "Лофт-спальня с графитовой стеной и подсветкой. Атмосфера тишины и тепла." },
+  { src: "projects/P_20190912_004011_vHDR_On.jpg", caption: "Диванная группа с текстурным ритмом ткани — фирменный стиль Formalab." },
+  { src: "projects/P_20180705_151636.jpg", caption: "Коридор под скатом крыши. Тёмное дерево и мягкий свет точек." },
+  { src: "projects/IMG-20210304-WA0006.jpg", caption: "Ресторанный зал с интегрированным озеленением — природная геометрия." },
+  { src: "projects/IMG-20210304-WA0000.jpg", caption: "Медный куб-стойка. Акцентный элемент в интерьере из камня." },
+  { src: "projects/IMG_20171208_010952.jpg", caption: "Винный зал с латунными акцентами и стеклом — театральная тёплая атмосфера." },
+  { src: "projects/IMG_20171207_004810.jpg", caption: "Бар Formalab: бетон, кожа и свет. Геометрия звука и пространства." },
+  { src: "projects/P_20180414_084921.jpg", caption: "Секции ZARYAD в процессе монтажа. Структурный дизайн и точная сборка." },
+  { src: "projects/P_20180414_084844.jpg", caption: "Рабочая зона ZARYAD. Минимализм и инженерия формы." },
+  { src: "projects/IMG_20171208_011046.jpg", caption: "Интерьер ресторана с бархатным светом. Атмосфера завершённости." },
 ];
 
 export default function ProjectsSection() {
@@ -48,7 +49,7 @@ export default function ProjectsSection() {
             style={{ width: "480px", height: "320px" }}
           >
             <img
-              src={item.src}
+              src={withBase(item.src)}
               alt={item.caption}
               className="w-full h-full object-cover rounded-2xl transition-transform duration-500 group-hover:scale-105"
             />
