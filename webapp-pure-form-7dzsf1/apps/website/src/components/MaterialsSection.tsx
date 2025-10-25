@@ -133,7 +133,7 @@ const MaterialsSection = () => {
           aria-hidden="true"
         />
 
-        <div className="absolute inset-0 hidden md:block overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
           <video
             ref={videoRef}
             className="absolute inset-0 h-full w-full object-cover opacity-70"
@@ -157,6 +157,11 @@ const MaterialsSection = () => {
         <h2 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] mb-20 text-center text-zinc-200">
           Технологии и материалы
         </h2>
+
+        <p className="mx-auto mb-16 max-w-4xl text-center text-base text-zinc-300 md:text-lg">
+          Мы проектируем и производим конструкции, совмещая лазерную точность, роботизированные процессы
+          и ручную доводку изделий из металла, дерева и композитов.
+        </p>
 
         <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-3">
           {materials.map((material) => (
