@@ -1,4 +1,4 @@
-import anime from "animejs/lib/anime.es.js";
+import anime from "animejs";
 
 type OnScrollOptions = {
   selector?: string;
@@ -100,6 +100,8 @@ export type {
   AnimeInstance,
   AnimeTimelineInstance,
   AnimeAnimParams,
-} from "animejs/lib/anime.es.js";
+} from "animejs";
 
+// Лёгкая обёртка для animejs — просто реэкспорт.
+// Это позволяет использовать алиас в vite.config.ts без ошибок при сборке/SSR.
 export default anime;

@@ -1,57 +1,55 @@
 import { useEffect } from "react";
 
-type AutoplayOptions = {
-  muted?: boolean;
-  maxRetries?: number;
-  retryDelay?: number;
-};
-
-export const useAutoplayVideo = (
-  ref: React.RefObject<HTMLVideoElement>,
-  options: AutoplayOptions = {}
-) => {
-  const { muted = true, maxRetries = 3, retryDelay = 300 } = options;
-
+export function useAutoplayVideo(ref: React.RefObject<HTMLVideoElement | null>) {
   useEffect(() => {
     const video = ref.current;
-    if (!video) {
-      return;
-    }
+    if (!video || typeof window === "undefined") return;
 
-    video.defaultMuted = muted;
-    video.muted = muted;
+    let cancelled = false;
+    let retryTimeout: number | undefined;
+
+    video.muted = true;
+    video.defaultMuted = true;
     video.playsInline = true;
 
-    let retries = 0;
-
-    const attemptPlay = () => {
-      const playPromise = video.play();
-      if (playPromise && typeof playPromise.catch === "function") {
-        playPromise.catch(() => {
-          if (retries < maxRetries) {
-            retries += 1;
-            window.setTimeout(attemptPlay, retryDelay);
-          }
-        });
+    const tryPlay = async () => {
+      if (cancelled || !video) return;
+      try {
+        await video.play();
+      } catch {
+        if (cancelled) return;
+        // постепенный бэкофф
+        retryTimeout = window.setTimeout(tryPlay, 400);
       }
     };
 
-    const handleReady = () => {
-      attemptPlay();
+    const handleVisibility = () => {
+      if (document.hidden) {
+        video.pause();
+      } else {
+        tryPlay();
+      }
     };
 
+    // Если медиа уже готово — попытаться сразу
     if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      attemptPlay();
+      tryPlay();
     } else {
-      video.addEventListener("loadedmetadata", handleReady, { once: true });
-      video.addEventListener("canplay", handleReady, { once: true });
+      const onCanPlay = () => {
+        video.removeEventListener("canplay", onCanPlay);
+        tryPlay();
+      };
+      video.addEventListener("canplay", onCanPlay, { once: true });
     }
 
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
-      video.removeEventListener("loadedmetadata", handleReady);
-      video.removeEventListener("canplay", handleReady);
+      cancelled = true;
+      if (retryTimeout !== undefined) window.clearTimeout(retryTimeout);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
-  }, [ref, muted, maxRetries, retryDelay]);
-};
+  }, [ref]);
+}
 
 export default useAutoplayVideo;
