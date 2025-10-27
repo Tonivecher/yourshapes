@@ -1,40 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
-export function useIsMobile(breakpoint = 768) {
+export function useIsMobile(breakpoint = 768): boolean {
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
-  );
+  )
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined") return
 
-    const mq = `(max-width: ${breakpoint}px)`;
-    const media = window.matchMedia(mq);
+    const mq = `(max-width: ${breakpoint}px)`
+    const media = window.matchMedia(mq)
 
-    const handler = (ev: MediaQueryListEvent | MediaQueryList) => {
-      setIsMobile(media.matches);
-    };
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches)
+    }
 
     // modern API returns MediaQueryList with addEventListener in some browsers
     if (typeof media.addEventListener === "function") {
-      media.addEventListener("change", handler as any);
+      media.addEventListener("change", handleChange)
     } else if (typeof media.addListener === "function") {
-      media.addListener(handler as any);
+      media.addListener(handleChange)
     }
 
     // initial sync
-    setIsMobile(media.matches);
+    setIsMobile(media.matches)
 
     return () => {
       if (typeof media.removeEventListener === "function") {
-        media.removeEventListener("change", handler as any);
+        media.removeEventListener("change", handleChange)
       } else if (typeof media.removeListener === "function") {
-        media.removeListener(handler as any);
+        media.removeListener(handleChange)
       }
-    };
-  }, [breakpoint]);
+    }
+  }, [breakpoint])
 
-  return isMobile;
+  return isMobile
 }
 
-export default useIsMobile;
+export default useIsMobile
