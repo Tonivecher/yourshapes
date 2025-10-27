@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: apps/website   # все run-команды идут из apps/website
+        working-directory: webapp-pure-form-7dzsf1/apps/website
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: apps/website/dist   # артефакт берём из apps/website/dist (абсолютный путь)
+          path: webapp-pure-form-7dzsf1/apps/website/dist
 
   deploy:
     needs: build
