@@ -12,6 +12,12 @@
     "dev:website": "cd webapp-pure-form-7dzsf1 && bun run dev:website",
     "build:website": "cd webapp-pure-form-7dzsf1 && bun run build:website",
     "build:website:dev": "cd webapp-pure-form-7dzsf1 && bun run build:website:dev",
-    "preview:website": "cd webapp-pure-form-7dzsf1 && bun run preview:website"
+    "preview:website": "cd webapp-pure-form-7dzsf1 && bun run preview:website",
+    "timeweb:mcp": "bash scripts/run-timeweb-mcp-server.sh",
+    "timeweb:mcp:call": "node scripts/timeweb-mcp-cli.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.20.2",
+    "timeweb-mcp-server": "^0.1.3"
   }
 }
