@@ -14,7 +14,9 @@
     "build:website:dev": "cd webapp-pure-form-7dzsf1 && bun run build:website:dev",
     "preview:website": "cd webapp-pure-form-7dzsf1 && bun run preview:website",
     "timeweb:mcp": "bash scripts/run-timeweb-mcp-server.sh",
-    "timeweb:mcp:call": "node scripts/timeweb-mcp-cli.mjs"
+    "timeweb:mcp:call": "node scripts/timeweb-mcp-cli.mjs",
+    "build": "vite build",
+    "preview": "vite preview --host --port 8080"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.20.2",
