@@ -1,26 +1,30 @@
 #!/usr/bin/env bash
-# Ensure Bun is available for the build so Timeweb Cloud deployments succeed.
+# Build script for Timeweb deployments. Ensures a modern Node.js runtime is available
+# before installing dependencies and running the Vite build for the website workspace.
 
 set -euo pipefail
 
-export DEBIAN_FRONTEND=noninteractive
+NODE_VERSION="${NODE_VERSION:-20.18.0}"
+NODE_ARCHIVE="node-v${NODE_VERSION}-linux-x64"
+NODE_URL="https://nodejs.org/dist/v${NODE_VERSION}/${NODE_ARCHIVE}.tar.xz"
+NODE_DIR="$(pwd)/.timeweb-node"
 
-if command -v apt-get >/dev/null 2>&1; then
-  apt-get update
-  apt-get install -y curl ca-certificates unzip
+if [[ ! -x "${NODE_DIR}/bin/node" ]]; then
+  mkdir -p "${NODE_DIR}"
+  tmp_archive="$(mktemp)"
+  curl -fsSL "${NODE_URL}" -o "${tmp_archive}"
+  tar -xJf "${tmp_archive}" -C "${NODE_DIR}" --strip-components=1
+  rm -f "${tmp_archive}"
 fi
 
-if ! command -v curl >/dev/null 2>&1; then
-  echo "curl is required for installing Bun. Ensure it is available before running this script." >&2
-  exit 1
+export PATH="${NODE_DIR}/bin:${PATH}"
+
+cd webapp-pure-form-7dzsf1/apps/website
+
+if [[ -f package-lock.json ]]; then
+  npm ci
+else
+  npm install
 fi
 
-if ! command -v bun >/dev/null 2>&1; then
-  curl -fsSL https://bun.sh/install | bash
-fi
-
-export BUN_INSTALL="${HOME}/.bun"
-export PATH="${BUN_INSTALL}/bin:${PATH}"
-
-bun install --frozen-lockfile
-bun run build:website
+npm run build
