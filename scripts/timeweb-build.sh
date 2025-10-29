@@ -6,22 +6,19 @@ set -euo pipefail
 
 cd webapp-pure-form-7dzsf1/apps/website
 
-NODE_VERSION="${NODE_VERSION:-20.18.0}"
-NODE_BIN_DIR="$(pwd)/node_modules/node/bin"
-
-if [[ ! -x "${NODE_BIN_DIR}/node" ]]; then
-  npm install --no-save "node@${NODE_VERSION}"
+if ! command -v npm >/dev/null 2>&1; then
+  echo "npm is required on PATH" >&2
+  exit 1
 fi
 
-export PATH="${NODE_BIN_DIR}:${PATH}"
 export npm_config_cache="${npm_config_cache:-$(pwd)/.npm-cache}"
 
 if [[ -f package-lock.json ]]; then
-  "${NODE_BIN_DIR}/npm" ci
+  npm ci
 else
-  "${NODE_BIN_DIR}/npm" install
+  npm install
 fi
 
-"${NODE_BIN_DIR}/npm" run build
+npm run build
 
 rm -rf "${npm_config_cache}"
