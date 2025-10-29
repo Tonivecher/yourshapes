@@ -31,7 +31,8 @@ export default defineConfig(({ mode }) => {
         '.prvw.live'
       ],
       host: true,
-      cors: true
+      cors: true,
+      historyApiFallback: true,
     },
     build: {
       sourcemap: true,
