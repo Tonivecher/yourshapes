@@ -63,10 +63,13 @@ async function main() {
     process.exit(1);
   }
 
-  const serverBinary = path.resolve(PROJECT_ROOT, "node_modules/.bin/timeweb-mcp-server");
+  // Prefer bunx to avoid requiring a global Node in the environment
+  const command = "bunx";
+  const args = ["--yes", "timeweb-mcp-server"]; // delegate resolution to bunx
 
   const transport = new StdioClientTransport({
-    command: serverBinary,
+    command,
+    args,
     env: { TIMEWEB_TOKEN: process.env.TIMEWEB_TOKEN },
     stderr: "pipe",
   });

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Skeleton({
   className,
@@ -8,8 +8,9 @@ function Skeleton({
     <div
       className={cn("animate-pulse rounded-md bg-primary/10", className)}
       {...props}
+      data-oid="dwj13hz"
     />
-  )
+  );
 }
 
-export { Skeleton }
+export { Skeleton };

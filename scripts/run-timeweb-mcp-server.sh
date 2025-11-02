@@ -22,4 +22,4 @@ MSG
   exit 1
 fi
 
-exec npx --yes timeweb-mcp-server "$@"
+exec bunx --yes timeweb-mcp-server "$@"

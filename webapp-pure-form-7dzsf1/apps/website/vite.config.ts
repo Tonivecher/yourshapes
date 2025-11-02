@@ -35,7 +35,7 @@ export default defineConfig(({ mode }) => {
       historyApiFallback: true,
     },
     build: {
-      sourcemap: true,
+      sourcemap: isDevelopment,
     },
     preview: {
       port: 5173,

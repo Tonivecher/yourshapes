@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { withBase } from '@/lib/utils';
-import { useAutoplayVideo } from '@/hooks/useAutoplayVideo';
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { withBase } from "@/lib/utils";
+import { useAutoplayVideo } from "@/hooks/useAutoplayVideo";
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const heroBackground = withBase("images/about-bg-fallback.png");
+  const videoSrc = withBase("videos/about-bg.mp4");
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useAutoplayVideo(videoRef);
@@ -16,102 +18,110 @@ const HeroSection = () => {
   // Smooth scroll function
   const scrollToContact = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const contactSection = document.getElementById('contact');
+    const contactSection = document.getElementById("contact");
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+      contactSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+    <section
+      className="relative h-screen w-full flex items-center justify-start overflow-hidden"
+      data-oid="yyo2q-_"
+    >
       {/* Background video/image */}
-      <div className="absolute inset-0 bg-background">
-        {/* Fallback image for mobile or when video fails to load */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url("${withBase("images/about-bg-fallback.jpg")}")`,
-            opacity: 0.65,
-          }}
-        ></div>
-        
-        {/* Video background - hidden on mobile for performance */}
-        <div className="absolute inset-0 hidden md:block overflow-hidden">
-          <video
-            ref={videoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="absolute h-full w-full object-cover opacity-70"
-          >
-            <source src={withBase("videos/about-bg.mp4")} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          
-          {/* Overlay for better text contrast */}
-          <div className="absolute inset-0 bg-background/30"></div>
-        </div>
+      <div className="absolute inset-0 bg-background" data-oid="dgrtff0" />
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-30"
+        style={{ backgroundImage: `url("${heroBackground}")` }}
+        data-oid="44us.ls"
+      />
+
+      <div
+        className="absolute inset-0 hidden overflow-hidden md:block"
+        data-oid="d.k1r0c"
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="h-full w-full object-cover opacity-20"
+          data-oid="o.cam8s"
+        >
+          <source src={videoSrc} type="video/mp4" data-oid=".kfej02" />
+          Ваш браузер не поддерживает видео.
+        </video>
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 px-6 text-center">
+      <div
+        className="container relative z-10 px-8 max-w-6xl"
+        data-oid="67-pkbl"
+      >
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 40 }}
+          transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+          className="max-w-4xl"
+          data-oid="yhyg.1x"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-light tracking-wider text-foreground mb-4 uppercase">
-            Инженерия формы
+          <h1
+            className="text-6xl md:text-7xl lg:text-8xl font-normal text-foreground mb-8 leading-[0.9] tracking-tight"
+            data-oid="svvgr_e"
+          >
+            Мебель и интерьеры
+            <br data-oid="f36ir0t" />
+            <span className="text-foreground/60" data-oid="onntm-c">
+              на заказ
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-foreground/80 mb-8">
-            Студия архитектурного дизайна и производства
-          </p>
+          <div className="max-w-xl" data-oid="kx9n7zc">
+            <p
+              className="text-lg md:text-xl text-foreground/70 mb-6 font-light leading-relaxed"
+              data-oid="sp3ok41"
+            >
+              С инженерной точностью и премиальным уровнем отделки.
+            </p>
+            <p
+              className="text-base md:text-lg text-foreground/60 mb-12 font-light leading-relaxed"
+              data-oid="xg:_dbu"
+            >
+              Собственное производство. Мы создаём мебель, которая выглядит
+              дорого — и стоит разумно. Металл, дерево, композиты.
+            </p>
+          </div>
           <button
             onClick={scrollToContact}
-            className="relative cursor-pointer py-4 px-8 text-center font-barlow inline-flex justify-center items-center text-base uppercase text-white rounded-lg border-solid transition-transform duration-300 ease-in-out group outline-offset-4 focus:outline focus:outline-2 focus:outline-white focus:outline-offset-4 overflow-hidden"
+            className="text-sm font-light text-foreground border border-foreground/20 px-8 py-3 hover:bg-foreground hover:text-background transition-all duration-500 tracking-wide"
+            data-oid="tf8f61o"
           >
-            <span className="relative z-20">Связаться</span>
-            <span className="absolute left-[-75%] top-0 h-full w-[50%] bg-white/20 rotate-12 z-10 blur-lg group-hover:left-[125%] transition-all duration-1000 ease-in-out"></span>
-            <span className="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-tl-lg border-l-2 border-t-2 top-0 left-0"></span>
-            <span className="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute group-hover:h-[90%] h-[60%] rounded-tr-lg border-r-2 border-t-2 top-0 right-0"></span>
-            <span className="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[60%] group-hover:h-[90%] rounded-bl-lg border-l-2 border-b-2 left-0 bottom-0"></span>
-            <span className="w-1/2 drop-shadow-3xl transition-all duration-300 block border-[#D4EDF9] absolute h-[20%] rounded-br-lg border-r-2 border-b-2 right-0 bottom-0"></span>
+            Обсудить проект
           </button>
         </motion.div>
       </div>
 
-      {/* Decorative elements */}
-      <div className="absolute bottom-12 left-0 right-0 flex justify-center">
+      {/* Scroll indicator */}
+      <div
+        className="absolute bottom-12 right-8 flex flex-col items-center"
+        data-oid="0g8v9dn"
+      >
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: isLoaded ? 0.7 : 0 }}
-          transition={{ duration: 1, delay: 1 }}
+          animate={{ opacity: isLoaded ? 0.4 : 0 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          className="flex flex-col items-center"
+          data-oid="uhvw1-e"
         >
-          <svg
-            width="24"
-            height="48"
-            viewBox="0 0 24 48"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="animate-bounce"
+          <span
+            className="text-xs font-light text-foreground/40 mb-4 tracking-wider rotate-90 origin-center"
+            data-oid="j2vigbe"
           >
-            <path
-              d="M12 2L12 46"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M5 39L12 46L19 39"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+            SCROLL
+          </span>
+          <div className="w-px h-16 bg-foreground/20" data-oid="pk3qvle"></div>
         </motion.div>
       </div>
     </section>
