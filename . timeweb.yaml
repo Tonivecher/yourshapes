@@ -1,0 +1,3 @@
+build:
+  command: cd apps/website && npm ci && npm run build
+  publish_dir: apps/website/dist
