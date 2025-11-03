@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
       '**/*.woff',
       '**/*.woff2',
       '**/*.otf',
+      '**/*.ttf',
     ],
     resolve: {
       alias: [
@@ -44,7 +45,7 @@ export default defineConfig(({ mode }) => {
         output: {
           assetFileNames: (assetInfo) => {
             const ext = path.extname(assetInfo.name ?? '').toLowerCase()
-            if (['.woff', '.woff2', '.otf'].includes(ext)) {
+            if (['.woff', '.woff2', '.otf', '.ttf'].includes(ext)) {
               return 'fonts/[name][extname]'
             }
 
