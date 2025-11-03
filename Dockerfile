@@ -9,23 +9,27 @@ ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 COPY apps/website/package*.json ./apps/website/
 RUN cd apps/website && npm ci || npm install
 
+# Устанавливаем typescript, если не подтянулся
+RUN cd apps/website && npm install typescript --save-dev
+
 # Принудительно пересобираем esbuild и rollup
 RUN cd apps/website && npm install esbuild@0.25.12 rollup@4.22.4 --force \
  && npm rebuild esbuild rollup \
  && npm cache clean --force
 
-# Копируем код и билдим
+# Копируем код и общие конфиги
+COPY tsconfig*.json ./ || true
 COPY apps/website ./apps/website
+
+# Собираем проект
 RUN cd apps/website && npm run build --verbose || (echo "=== BUILD LOG ===" && cat /root/.npm/_logs/* || true)
 
 # ---------- serve ----------
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
-# Важно: теперь копируем из правильной папки
 COPY --from=build /app/apps/website/dist ./
 
-# Настройка SPA fallback для React Router
 RUN rm /etc/nginx/conf.d/default.conf \
  && printf "server {\n\
   listen 80;\n\
