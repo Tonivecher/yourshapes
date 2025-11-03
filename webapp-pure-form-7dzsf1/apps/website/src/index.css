@@ -5,9 +5,9 @@
 @font-face {
   font-family: "Roundex";
   src:
-    url("/fonts/Roundex-Regular.woff2") format("woff2"),
-    url("/fonts/Roundex-Regular.woff") format("woff"),
-    url("/fonts/Roundex-Regular.otf") format("opentype");
+    url("./assets/fonts/Roundex-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Roundex-Regular.woff") format("woff"),
+    url("./assets/fonts/Roundex-Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -16,9 +16,9 @@
 @font-face {
   font-family: "Roundex";
   src:
-    url("/fonts/Roundex-Regular.woff2") format("woff2"),
-    url("/fonts/Roundex-Regular.woff") format("woff"),
-    url("/fonts/Roundex-Regular.otf") format("opentype");
+    url("./assets/fonts/Roundex-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Roundex-Regular.woff") format("woff"),
+    url("./assets/fonts/Roundex-Regular.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -27,9 +27,9 @@
 @font-face {
   font-family: "Roundex";
   src:
-    url("/fonts/Roundex-Regular.woff2") format("woff2"),
-    url("/fonts/Roundex-Regular.woff") format("woff"),
-    url("/fonts/Roundex-Regular.otf") format("opentype");
+    url("./assets/fonts/Roundex-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Roundex-Regular.woff") format("woff"),
+    url("./assets/fonts/Roundex-Regular.otf") format("opentype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
