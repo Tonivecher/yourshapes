@@ -1,20 +1,27 @@
-# -------- build stage --------
+# ---------- build stage ----------
 FROM node:20-slim AS build
 WORKDIR /app
-
-# copy only website package first to leverage layer caching
-COPY apps/website/package*.json ./ 
+COPY apps/website/package*.json ./
 RUN npm ci
-
-# now copy the website sources and build
 COPY apps/website/ ./
 RUN npm run build
 
-# -------- run stage --------
+# ---------- run stage ----------
 FROM nginx:alpine
-# copy built static into nginx html root
-COPY --from=build /app/dist /usr/share/nginx/html
-# optional: basic SPA fallback
-RUN printf "try_files \$uri /index.html;\n" > /etc/nginx/conf.d/default.conf
+WORKDIR /usr/share/nginx/html
+COPY --from=build /app/dist ./
+
+# overwrite default config with SPA fallback
+RUN rm /etc/nginx/conf.d/default.conf
+RUN printf "server {\n\
+  listen 80;\n\
+  server_name localhost;\n\
+  root /usr/share/nginx/html;\n\
+  index index.html;\n\
+  location / {\n\
+    try_files \$uri \$uri/ /index.html;\n\
+  }\n\
+}" > /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
