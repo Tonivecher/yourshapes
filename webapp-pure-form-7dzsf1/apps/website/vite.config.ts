@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react()
     ],
+    // Use relative asset paths so nginx serves the bundle without MIME mismatches.
     base: './',
     assetsInclude: [
       '**/*.woff',
