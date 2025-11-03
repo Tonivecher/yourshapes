@@ -16,7 +16,8 @@ RUN npm install esbuild@0.25.12 rollup@4.22.4 --force \
 
 # Копируем код и билдим
 COPY apps/website/ ./
-RUN npm run build || (npm rebuild esbuild && npm run build)
+RUN npm run build --verbose || (echo "=== BUILD LOG ===" && cat /root/.npm/_logs/* || true)
+
 
 # ---------- serve ----------
 FROM nginx:alpine
