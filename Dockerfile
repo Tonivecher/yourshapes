@@ -1,15 +1,28 @@
+# ---------- build ----------
 FROM node:22-slim AS build
+
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NPM_CONFIG_UPDATE_NOTIFIER=false
+
+# Устанавливаем зависимости
 COPY apps/website/package*.json ./
 RUN npm ci || npm install
-RUN npm install esbuild@0.25.12 --force && npm rebuild esbuild && npm cache clean --force
+
+# Принудительно пересобираем esbuild и rollup
+RUN npm install esbuild@0.25.12 rollup@4.22.4 --force \
+ && npm rebuild esbuild rollup \
+ && npm cache clean --force
+
+# Копируем код и билдим
 COPY apps/website/ ./
-RUN npm run build
+RUN npm run build || (npm rebuild esbuild && npm run build)
+
+# ---------- serve ----------
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/dist ./
+
 RUN rm /etc/nginx/conf.d/default.conf \
  && printf "server {\n\
   listen 80;\n\
@@ -18,5 +31,6 @@ RUN rm /etc/nginx/conf.d/default.conf \
   index index.html;\n\
   location / { try_files \$uri \$uri/ /index.html; }\n\
 }\n" > /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 CMD ["nginx","-g","daemon off;"]
