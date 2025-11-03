@@ -10,7 +10,12 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react()
     ],
-    base: './',
+    base: '',
+    assetsInclude: [
+      '**/*.woff',
+      '**/*.woff2',
+      '**/*.otf',
+    ],
     resolve: {
       alias: [
         { find: "@", replacement: path.resolve(__dirname, "./src") },
@@ -34,6 +39,19 @@ export default defineConfig(({ mode }) => {
       sourcemap: isDevelopment,
       outDir: 'dist',
       assetsDir: 'assets',
+      copyPublicDir: true,
+      rollupOptions: {
+        output: {
+          assetFileNames: (assetInfo) => {
+            const ext = path.extname(assetInfo.name ?? '').toLowerCase()
+            if (['.woff', '.woff2', '.otf'].includes(ext)) {
+              return 'fonts/[name][extname]'
+            }
+
+            return 'assets/[name]-[hash][extname]'
+          },
+        },
+      },
     },
     preview: {
       port: 5173,
