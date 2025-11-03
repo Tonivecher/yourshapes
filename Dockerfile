@@ -1,20 +1,19 @@
 # ---------- build ----------
 FROM node:22-slim AS build
+WORKDIR /app
 
-# ускоряем сборку и избегаем региональных зеркал
+# отключаем автообновления и шум npm
 ENV NODE_ENV=production
 ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 
-WORKDIR /app
-
-# копируем только package.json и lockfile для кэширования зависимостей
+# копируем package.json и lockfile
 COPY apps/website/package*.json ./
 
-# устанавливаем зависимости
+# ставим зависимости
 RUN npm ci || npm install
 
-# пересобираем esbuild для текущей платформы, чтобы избежать ошибки Expected 0.25.x
-RUN npm rebuild esbuild && npm cache clean --force
+# гарантированно синхронизируем esbuild бинарь
+RUN npm install esbuild@0.25.12 --force && npm rebuild esbuild && npm cache clean --force
 
 # копируем исходники и собираем проект
 COPY apps/website/ ./
@@ -22,13 +21,11 @@ RUN npm run build
 
 # ---------- serve ----------
 FROM nginx:alpine
-
 WORKDIR /usr/share/nginx/html
 
-# копируем готовый билд
 COPY --from=build /app/dist ./
 
-# SPA fallback конфигурация
+# конфиг для SPA
 RUN rm /etc/nginx/conf.d/default.conf \
  && printf "server {\n\
   listen 80;\n\
