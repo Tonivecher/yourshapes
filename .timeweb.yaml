@@ -1,3 +1,8 @@
+framework: React
+environment:
+  runtime: node
+  version: 22
 build:
-  command: npm run build
+  command: cd webapp-pure-form-7dzsf1/apps/website && npm install esbuild@0.25.12 --force && npm run build
   publish_dir: webapp-pure-form-7dzsf1/apps/website/dist
+branch: main
