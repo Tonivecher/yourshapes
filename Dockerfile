@@ -11,6 +11,7 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/dist ./
 
+# SPA fallback
 RUN rm /etc/nginx/conf.d/default.conf
 RUN printf "server {\n\
   listen 80;\n\
