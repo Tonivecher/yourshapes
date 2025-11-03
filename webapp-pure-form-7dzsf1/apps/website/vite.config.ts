@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react()
     ],
-    base: '',
+    base: './',
     assetsInclude: [
       '**/*.woff',
       '**/*.woff2',

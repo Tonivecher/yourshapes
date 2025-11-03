@@ -39,10 +39,10 @@ server {
   index index.html;
 
   types {
-    application/javascript js mjs;
     text/css css;
-    font/woff woff;
+    application/javascript js mjs;
     font/woff2 woff2;
+    font/woff woff;
     font/otf otf;
   }
 
