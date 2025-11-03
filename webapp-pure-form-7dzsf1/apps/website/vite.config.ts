@@ -32,6 +32,8 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       sourcemap: isDevelopment,
+      outDir: 'dist',
+      assetsDir: 'assets',
     },
     preview: {
       port: 5173,

@@ -31,13 +31,26 @@ WORKDIR /usr/share/nginx/html
 COPY --from=build /app/apps/website/dist ./
 
 RUN rm /etc/nginx/conf.d/default.conf \
- && printf "server {\n\
-  listen 80;\n\
-  server_name localhost;\n\
-  root /usr/share/nginx/html;\n\
-  index index.html;\n\
-  location / { try_files \$uri \$uri/ /index.html; }\n\
-}\n" > /etc/nginx/conf.d/default.conf
+ && cat <<'EOF' > /etc/nginx/conf.d/default.conf
+server {
+  listen 80;
+  server_name localhost;
+  root /usr/share/nginx/html;
+  index index.html;
+
+  types {
+    application/javascript js mjs;
+    text/css css;
+    font/woff woff;
+    font/woff2 woff2;
+    font/otf otf;
+  }
+
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+}
+EOF
 
 EXPOSE 80
 CMD ["nginx","-g","daemon off;"]
