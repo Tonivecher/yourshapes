@@ -52,10 +52,7 @@ const App = () => {
         ) : (
           <>
             <ThemeSwitcher data-oid="jhkc75f" />
-            <BrowserRouter
-              basename={import.meta.env.BASE_URL}
-              data-oid="m5jx87."
-            >
+            <BrowserRouter basename="/" data-oid="m5jx87.">
               <Suspense fallback={null} data-oid="9jpwlz_">
                 <Routes data-oid="0n9-e.j">
                   <Route
