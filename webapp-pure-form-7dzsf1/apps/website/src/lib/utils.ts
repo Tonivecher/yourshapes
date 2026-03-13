@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 /**
@@ -13,4 +13,16 @@ export function withBase(path: string) {
   const base = import.meta.env.BASE_URL ?? "/";
   const normalizedBase = base.endsWith("/") ? base.slice(0, -1) : base;
   return `${normalizedBase}/${path.replace(/^\/+/, "")}`;
+}
+
+export function toWebpPath(path: string) {
+  return path.replace(/\.(png|jpe?g)$/i, ".webp");
+}
+
+export function isFinePointerDevice() {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return false;
+  }
+
+  return window.matchMedia("(pointer: fine)").matches;
 }

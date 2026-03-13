@@ -1,9 +1,10 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 const Footer = lazy(() => import("@/components/Footer"));
 const Home = lazy(() => import("./pages/Home"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage"));
@@ -50,8 +51,7 @@ const App = () => {
         {isLoading ? (
           <Preloader data-oid="emwir-n" />
         ) : (
-          <>
-            <ThemeSwitcher data-oid="jhkc75f" />
+          <SmoothScroll>
             <BrowserRouter basename="/" data-oid="m5jx87.">
               <Suspense fallback={null} data-oid="9jpwlz_">
                 <Routes data-oid="0n9-e.j">
@@ -74,7 +74,7 @@ const App = () => {
                 </Routes>
               </Suspense>
             </BrowserRouter>
-          </>
+          </SmoothScroll>
         )}
       </TooltipProvider>
     </QueryClientProvider>

@@ -2,7 +2,6 @@
 export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
-
   theme: {
     extend: {
       borderRadius: {
@@ -14,13 +13,19 @@ export default {
         3: "3px",
       },
       fontFamily: {
-        sans: ["Inter", "Roundex", "sans-serif"],
-        serif: ["Playfair Display", "serif"],
+        sans: ["Manrope", "sans-serif"],
+        display: ["Roundex", "sans-serif"],
         roundex: ["Roundex", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        luxury: {
+          black: "#050505",
+          charcoal: "#1A1A1A",
+          silver: "#C0C0C0",
+          bronze: "#CD7F32",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -93,9 +98,9 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        float: "float 3s ease-in-out infinite",
-        "float-slow": "float-slow 4s ease-in-out infinite",
-        "float-slower": "float-slower 5s ease-in-out infinite",
+        float: "float 5s ease-in-out infinite",
+        "float-slow": "float-slow 7s ease-in-out infinite",
+        "float-slower": "float-slower 9s ease-in-out infinite",
       },
     },
     fontFamily: {},

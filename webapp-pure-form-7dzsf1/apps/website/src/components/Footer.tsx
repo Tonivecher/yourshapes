@@ -1,143 +1,79 @@
 import { Link } from "react-router-dom";
 
+import { LazyMedia } from "@/components/LazyMedia";
+import { WEBSITE_NAME } from "@/constants";
+
 const Footer = () => {
   return (
-    <footer
-      data-animate
-      className="py-12 bg-background border-t border-border/30"
-      data-oid="628q67m"
-    >
-      <div className="container mx-auto px-6" data-oid="f5mg03e">
-        <div
-          className="flex flex-col md:flex-row justify-between items-center"
-          data-oid="py3eq__"
-        >
-          {/* Logo */}
-          <div className="mb-6 md:mb-0" data-oid="-9ad93o">
-            <Link to="/" className="block" data-oid="f_zehnu">
-              <img
-                src="https://storage.googleapis.com/fenado-ai-farm-public/generated/0bcd745a-7cce-4d29-aa51-fa78c3e56af3.webp"
-                alt="Инженерия формы"
-                loading="lazy"
-                decoding="async"
-                fetchPriority="low"
-                className="h-12 w-auto"
-                data-oid="aw.gt1y"
-              />
+    <footer className="px-5 pb-10 pt-6 md:px-8 md:pb-12">
+      <div className="section-shell mx-auto max-w-7xl px-6 py-10 md:px-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(205,127,50,0.14),transparent_26%)]" />
+        <div className="relative flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl">
+            <Link to="/" className="flex items-center gap-4">
+              <div className="h-12 w-12 overflow-hidden rounded-full border border-white/10 bg-white/5">
+                <LazyMedia
+                  alt={WEBSITE_NAME}
+                  src="logo.webp"
+                  webpSrc="logo.webp"
+                  className="object-contain p-2"
+                  wrapperClassName="h-full w-full"
+                  priority
+                />
+              </div>
+              <div>
+                <p className="font-display text-lg tracking-[0.18em] text-[#f5f5f5]">
+                  {WEBSITE_NAME}
+                </p>
+                <p className="text-[0.7rem] uppercase tracking-[0.3em] text-[#c0c0c0]/55">
+                  Direct custom manufacturing
+                </p>
+              </div>
             </Link>
-          </div>
-
-          {/* Tagline */}
-          <div className="mb-6 md:mb-0 text-center" data-oid="7k94cct">
-            <p
-              className="text-foreground/70 text-sm tracking-wider uppercase"
-              data-oid="o1::aig"
-            >
-              Форма подчиняет материал
+            <p className="mt-6 max-w-xl text-sm leading-7 text-[#c0c0c0]/68 md:text-base">
+              Прямой производитель мебели на заказ для премиальных интерьеров,
+              коммерческих пространств и типовых серий с контролируемым
+              бюджетом.
             </p>
           </div>
 
-          {/* Social and Language */}
-          <div className="flex items-center space-x-6" data-oid="gv7_-yd">
-            {/* Social Icons */}
-            <div className="flex space-x-4" data-oid="obok6re">
+          <div className="grid gap-8 md:grid-cols-3 lg:min-w-[34rem]">
+            <div>
+              <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[#cd7f32]/75">
+                Email
+              </p>
               <a
-                href="#"
-                className="text-foreground/70 hover:text-primary transition-colors"
-                aria-label="Behance"
-                data-oid="ptgkfca"
+                href="mailto:contact@form-eng.com"
+                className="mt-3 inline-block text-base text-[#f5f5f5] transition hover:text-[#cd7f32]"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  data-oid="bf.lqi6"
-                >
-                  <path
-                    d="M8.5 9.5H3m11.5 0h-4m4 5h-4m-4 0H3m1.5-2.5h5a2 2 0 0 0 0-4h-5v8h5a2 2 0 0 0 0-4Zm8 0h2a2 2 0 0 0 0-4h-2v8Z"
-                    data-oid="n2p.nos"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="text-foreground/70 hover:text-primary transition-colors"
-                aria-label="Instagram"
-                data-oid=":v2kmto"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  data-oid="gxb6a-t"
-                >
-                  <rect
-                    width="20"
-                    height="20"
-                    x="2"
-                    y="2"
-                    rx="5"
-                    ry="5"
-                    data-oid="gudqn4x"
-                  />
-
-                  <path
-                    d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-                    data-oid="jiz4s0n"
-                  />
-
-                  <line
-                    x1="17.5"
-                    x2="17.51"
-                    y1="6.5"
-                    y2="6.5"
-                    data-oid=":.cu5.."
-                  />
-                </svg>
+                contact@form-eng.com
               </a>
             </div>
-
-            {/* Language Selector */}
-            <div
-              className="flex items-center border-l border-border/30 pl-6"
-              data-oid="3:5_wx."
-            >
-              <button className="text-foreground mr-2" data-oid="wr:ynz6">
-                RU
-              </button>
-              <span className="text-foreground/30" data-oid="8d:82gw">
-                /
-              </span>
-              <button
-                className="text-foreground/30 ml-2 cursor-not-allowed"
-                data-oid="8xv54lo"
+            <div>
+              <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[#cd7f32]/75">
+                Телефон
+              </p>
+              <a
+                href="tel:+74951234567"
+                className="mt-3 inline-block text-base text-[#f5f5f5] transition hover:text-[#cd7f32]"
               >
-                EN
-              </button>
+                +7 (495) 123-45-67
+              </a>
+            </div>
+            <div>
+              <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[#cd7f32]/75">
+                Адрес
+              </p>
+              <p className="mt-3 text-base text-[#f5f5f5]">
+                Москва, Проектируемый проезд, 1
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div
-          className="mt-12 pt-6 border-t border-border/10 text-center"
-          data-oid="ra9c0b5"
-        >
-          <p className="text-xs text-foreground/50" data-oid="6:pgj7t">
-            © {new Date().getFullYear()} Инженерия формы. Все права защищены.
-          </p>
+        <div className="relative mt-10 border-t border-white/10 pt-6 text-sm text-[#c0c0c0]/52">
+          © {new Date().getFullYear()} {WEBSITE_NAME}. Премиальное производство
+          мебели без посредников.
         </div>
       </div>
     </footer>

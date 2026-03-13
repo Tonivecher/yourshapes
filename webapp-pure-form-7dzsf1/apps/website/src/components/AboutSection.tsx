@@ -1,166 +1,123 @@
-import { useRef } from "react";
 import { motion } from "framer-motion";
-import { withBase } from "@/lib/utils";
-import { useAutoplayVideo } from "@/hooks/useAutoplayVideo";
+import { BadgeCheck, Factory, ShieldCheck, WalletCards } from "lucide-react";
+
+const benefits = [
+  {
+    icon: Factory,
+    title: "Собственная фабрика",
+    description:
+      "Проектируем, производим и собираем мебель внутри одного производственного цикла без передачи задачи посредникам.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Контроль качества на каждом этапе",
+    description:
+      "От замера до упаковки отслеживаем геометрию, отделку, фурнитуру и стабильность материалов по внутренним стандартам производства.",
+  },
+  {
+    icon: WalletCards,
+    title: "Честная стоимость",
+    description:
+      "Цена формируется из материалов, инженерии и работ, а не из цепочки подрядчиков и надбавок за перепродажу.",
+  },
+];
+
+const metrics = [
+  { value: "150+", label: "реализованных объектов" },
+  { value: "8 лет", label: "производственной экспертизы" },
+  { value: "3 сегмента", label: "корпусная, встроенная, коммерческая мебель" },
+  { value: "1 команда", label: "проект, производство и монтаж" },
+];
 
 const AboutSection = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  useAutoplayVideo(videoRef);
-
   return (
-    <section
-      id="about"
-      className="relative overflow-hidden py-32 md:py-40 bg-background"
-      data-oid="rqcm0s9"
-    >
-      {/* --- Background video layer --- */}
-      <div className="absolute inset-0 -z-10" data-oid="0sfqx-l">
-        <video
-          ref={videoRef}
-          className="h-full w-full object-cover opacity-10"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          data-oid="lfbkn3."
-        >
-          <source
-            src={withBase("videos/about2.mp4")}
-            type="video/mp4"
-            data-oid="ah16eqa"
-          />
-        </video>
-      </div>
-
-      {/* --- Foreground content --- */}
-      <div
-        className="relative z-10 container mx-auto px-8 max-w-6xl"
-        data-oid=".r2u9-j"
-      >
-        <div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
-          data-oid="5-h1z0n"
-        >
+    <section id="about" className="px-5 py-10 md:px-8 md:py-16">
+      <div className="section-shell mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-20 lg:px-14">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(205,127,50,0.16),transparent_25%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_20%)]" />
+        <div className="relative grid gap-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            data-oid="5hma.yg"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h2
-              className="text-5xl md:text-6xl lg:text-7xl font-normal text-foreground mb-8 leading-tight"
-              data-oid="jbilwn:"
-            >
-              О студии
+            <p className="eyebrow">О производстве</p>
+            <h2 className="section-heading mt-5 max-w-2xl">
+              Премиальная мебель без посредников и лишней дистанции между
+              идеей и цехом.
             </h2>
-            <div
-              className="w-16 h-px bg-foreground/30 mb-8"
-              data-oid=":--ef-k"
-            ></div>
+            <p className="section-copy mt-8 max-w-2xl">
+              Инженерия формы работает как прямой производитель мебели на
+              заказ. Мы соединяем архитектурный подход, фабричную дисциплину и
+              гибкость кастомных решений, чтобы собирать интерьеры высокой
+              сложности и при этом контролировать бюджет.
+            </p>
+            <p className="section-copy mt-6 max-w-2xl text-[#c0c0c0]/64">
+              Для премиальных интерьеров подбираем редкие отделки, натуральный
+              шпон, массив, латунь и сложные металлоконструкции. Для типовых
+              задач оптимизируем конструктив, материалы и цикл производства,
+              сохраняя высокую визуальную планку.
+            </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="space-y-6"
-            data-oid="g4:w42u"
-          >
-            <p
-              className="text-lg md:text-xl text-foreground/70 font-light leading-relaxed"
-              data-oid="crizukw"
-            >
-              Formalab — инженерная студия полного цикла. Мы проектируем и
-              производим корпусную и встроенную мебель на заказ.
-            </p>
-            <p
-              className="text-base md:text-lg text-foreground/60 font-light leading-relaxed"
-              data-oid="hdnitc-"
-            >
-              Наши клиенты — те, кто ценит пропорции, материалы и аккуратность
-              деталей. У нас собственный цех, поэтому цена не уходит в
-              посредников.
-            </p>
-            <p
-              className="text-base md:text-lg text-foreground/60 font-light leading-relaxed"
-              data-oid="i7:bhr8"
-            >
-              Мы работаем в двух направлениях: для тех, кто хочет визуальный
-              эффект премиум-интерьера без переплаты, и для тех, кто выбирает
-              без компромиссов — дорогие материалы, фурнитуру, точность сборки.
-            </p>
-          </motion.div>
+          <div className="grid gap-5">
+            {benefits.map((benefit, index) => {
+              const Icon = benefit.icon;
+
+              return (
+                <motion.article
+                  key={benefit.title}
+                  initial={{ opacity: 0, x: 28 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.8, delay: index * 0.08, ease: "easeOut" }}
+                  className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-6 backdrop-blur-xl"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#cd7f32]/25 bg-[#cd7f32]/10 text-[#cd7f32]">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold tracking-[-0.03em] text-[#f5f5f5]">
+                        {benefit.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-7 text-[#c0c0c0]/72 md:text-base">
+                        {benefit.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Stats section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-16 border-t border-foreground/10"
-          data-oid="5t.6mfj"
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.85, delay: 0.1, ease: "easeOut" }}
+          className="relative mt-14 grid gap-5 border-t border-white/10 pt-10 md:grid-cols-2 xl:grid-cols-4"
         >
-          <div className="text-center" data-oid="carwqcl">
+          {metrics.map((metric) => (
             <div
-              className="text-3xl md:text-4xl font-light text-foreground mb-2"
-              data-oid="utf7jhq"
+              key={metric.label}
+              className="rounded-[1.4rem] border border-white/8 bg-[#0c0c0c]/80 p-5"
             >
-              150+
+              <div className="flex items-center gap-2 text-[#cd7f32]">
+                <BadgeCheck className="h-4 w-4" />
+                <span className="text-[0.7rem] uppercase tracking-[0.28em]">
+                  Factory metric
+                </span>
+              </div>
+              <p className="mt-5 text-3xl font-semibold tracking-[-0.05em] text-[#f5f5f5]">
+                {metric.value}
+              </p>
+              <p className="mt-2 text-sm leading-7 text-[#c0c0c0]/66">
+                {metric.label}
+              </p>
             </div>
-            <div
-              className="text-sm text-foreground/50 font-light tracking-wide"
-              data-oid="7rshjc2"
-            >
-              Проектов
-            </div>
-          </div>
-          <div className="text-center" data-oid="yoay_jg">
-            <div
-              className="text-3xl md:text-4xl font-light text-foreground mb-2"
-              data-oid="c0nam.:"
-            >
-              8
-            </div>
-            <div
-              className="text-sm text-foreground/50 font-light tracking-wide"
-              data-oid="8vp3bm3"
-            >
-              Лет опыта
-            </div>
-          </div>
-          <div className="text-center" data-oid="3lj.fs8">
-            <div
-              className="text-3xl md:text-4xl font-light text-foreground mb-2"
-              data-oid="6734yg7"
-            >
-              24/7
-            </div>
-            <div
-              className="text-sm text-foreground/50 font-light tracking-wide"
-              data-oid="8lz4p.5"
-            >
-              Поддержка
-            </div>
-          </div>
-          <div className="text-center" data-oid="uo8:mqe">
-            <div
-              className="text-3xl md:text-4xl font-light text-foreground mb-2"
-              data-oid="671rq:_"
-            >
-              100%
-            </div>
-            <div
-              className="text-sm text-foreground/50 font-light tracking-wide"
-              data-oid="15:abip"
-            >
-              Качество
-            </div>
-          </div>
+          ))}
         </motion.div>
       </div>
     </section>

@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { ArrowUpRight, Building2, PhoneCall, Ruler } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,31 +19,41 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 
-// Form validation schema
 const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: "Имя должно содержать минимум 2 символа" }),
-  contact: z
-    .string()
-    .min(5, { message: "Введите корректный email или телефон" }),
-  message: z
-    .string()
-    .min(10, { message: "Сообщение должно содержать минимум 10 символов" }),
+  name: z.string().min(2, { message: "Имя должно содержать минимум 2 символа" }),
+  contact: z.string().min(5, { message: "Введите корректный email или телефон" }),
+  message: z.string().min(10, { message: "Сообщение должно содержать минимум 10 символов" }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
+
+const details = [
+  {
+    icon: Ruler,
+    title: "Замер и 3D-проект",
+    description: "Формируем основу проекта на старте, чтобы сразу считать сроки и конструктив.",
+  },
+  {
+    icon: Building2,
+    title: "Производство и монтаж",
+    description: "Одна команда отвечает за изделие до финальной установки на объекте.",
+  },
+  {
+    icon: PhoneCall,
+    title: "Быстрый контакт с фабрикой",
+    description: "Архитекторы, дизайнеры и частные заказчики общаются напрямую с производством.",
+  },
+];
 
 const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  // Initialize react-hook-form
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,12 +63,10 @@ const ContactSection = () => {
     },
   });
 
-  // Form submission handler
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    window.setTimeout(() => {
       console.log("Form submitted:", data);
       setIsSubmitting(false);
       form.reset();
@@ -65,250 +75,197 @@ const ContactSection = () => {
   };
 
   return (
-    <section
-      id="contact"
-      className="py-32 md:py-40 bg-background"
-      data-oid="c1_1sya"
-    >
-      <div className="container mx-auto px-8 max-w-6xl" data-oid="5t86rtm">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mb-20"
-          data-oid="pw9jka8"
-        >
-          <h2
-            className="text-5xl md:text-6xl lg:text-7xl font-normal text-foreground mb-8 leading-tight"
-            data-oid="6rrmfe:"
-          >
-            Начнём
-            <br data-oid="-6wxt9a" />
-            <span className="text-foreground/50" data-oid="igw147n">
-              сотрудничество
-            </span>
-          </h2>
-          <div className="max-w-xl" data-oid="9xpujn0">
-            <p
-              className="text-lg text-foreground/60 font-light leading-relaxed"
-              data-oid="jesu91a"
-            >
-              Мы создадим мебель по вашим идеям, фото или референсам. Оставьте
-              заявку — свяжемся, обсудим детали и предложим решение.
-            </p>
-          </div>
-        </motion.div>
-
-        <div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16"
-          data-oid="l5fey_k"
-        >
-          {/* Contact Form */}
+    <section id="contact" className="px-5 py-10 md:px-8 md:py-16">
+      <div className="section-shell mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-20 lg:px-14">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(205,127,50,0.18),transparent_26%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.09),transparent_20%)]" />
+        <div className="relative grid gap-12 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            data-oid="h2xyg9u"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <Form {...form} data-oid="hi.u..a">
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
-                data-oid="35rz1fx"
-              >
+            <p className="eyebrow">Запрос на производство</p>
+            <h2 className="section-heading mt-5 max-w-2xl">
+              Обсудим проект напрямую с фабрикой и посчитаем решение под ваш
+              интерьер.
+            </h2>
+            <p className="section-copy mt-8 max-w-2xl">
+              Присылайте план, эскиз, Pinterest-референсы или просто задачу.
+              Мы предложим материал, конструктив и формат производства: от
+              индивидуального премиум-объекта до оптимизированной типовой
+              серии.
+            </p>
+
+            <div className="mt-10 space-y-4">
+              {details.map((detail, index) => {
+                const Icon = detail.icon;
+
+                return (
+                  <motion.article
+                    key={detail.title}
+                    initial={{ opacity: 0, x: -22 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.25 }}
+                    transition={{ duration: 0.75, delay: index * 0.08, ease: "easeOut" }}
+                    className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-5"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#cd7f32]/25 bg-[#cd7f32]/10 text-[#cd7f32]">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold tracking-[-0.03em] text-[#f5f5f5]">
+                          {detail.title}
+                        </h3>
+                        <p className="mt-2 text-sm leading-7 text-[#c0c0c0]/72">
+                          {detail.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.article>
+                );
+              })}
+            </div>
+
+            <div className="mt-10 grid gap-5 border-t border-white/10 pt-8 md:grid-cols-2">
+              <div>
+                <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[#cd7f32]/75">
+                  Email
+                </p>
+                <a
+                  href="mailto:contact@form-eng.com"
+                  className="mt-3 inline-block text-lg font-semibold tracking-[-0.03em] text-[#f5f5f5] transition hover:text-[#cd7f32]"
+                >
+                  contact@form-eng.com
+                </a>
+              </div>
+              <div>
+                <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[#cd7f32]/75">
+                  Телефон
+                </p>
+                <a
+                  href="tel:+74951234567"
+                  className="mt-3 inline-block text-lg font-semibold tracking-[-0.03em] text-[#f5f5f5] transition hover:text-[#cd7f32]"
+                >
+                  +7 (495) 123-45-67
+                </a>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.8, delay: 0.05, ease: "easeOut" }}
+            className="rounded-[2rem] border border-white/10 bg-[#070707]/95 p-6 shadow-[0_28px_70px_rgba(0,0,0,0.38)] md:p-8"
+          >
+            <div className="mb-8 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[#cd7f32]/75">
+                  Brief request
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-[#f5f5f5]">
+                  Расскажите о проекте
+                </h3>
+              </div>
+              <ArrowUpRight className="h-5 w-5 text-[#cd7f32]" />
+            </div>
+
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
-                    <FormItem data-oid="lhjb.ht">
-                      <FormLabel
-                        className="text-sm font-light text-foreground/60 tracking-wide"
-                        data-oid="4_q-xj-"
-                      >
-                        ИМЯ
+                    <FormItem>
+                      <FormLabel className="text-xs uppercase tracking-[0.28em] text-[#c0c0c0]/55">
+                        Имя
                       </FormLabel>
-                      <FormControl data-oid="p4ugpnd">
+                      <FormControl>
                         <Input
                           {...field}
-                          className="bg-transparent border-0 border-b border-foreground/20 focus:border-foreground rounded-none px-0 py-4 text-lg font-light focus-visible:ring-0 focus-visible:ring-offset-0"
                           placeholder="Ваше имя"
-                          data-oid="6_sbtzo"
+                          className="h-14 rounded-2xl border-white/10 bg-white/[0.03] px-5 text-base text-[#f5f5f5] placeholder:text-[#c0c0c0]/35 focus-visible:ring-[#cd7f32]/35"
                         />
                       </FormControl>
-                      <FormMessage data-oid="ymks8.4" />
+                      <FormMessage />
                     </FormItem>
                   )}
-                  data-oid="bghldky"
                 />
 
                 <FormField
                   control={form.control}
                   name="contact"
                   render={({ field }) => (
-                    <FormItem data-oid="b8ni41n">
-                      <FormLabel
-                        className="text-sm font-light text-foreground/60 tracking-wide"
-                        data-oid="bza:qc:"
-                      >
-                        КОНТАКТ
+                    <FormItem>
+                      <FormLabel className="text-xs uppercase tracking-[0.28em] text-[#c0c0c0]/55">
+                        Контакт
                       </FormLabel>
-                      <FormControl data-oid="8cx.chr">
+                      <FormControl>
                         <Input
                           {...field}
-                          className="bg-transparent border-0 border-b border-foreground/20 focus:border-foreground rounded-none px-0 py-4 text-lg font-light focus-visible:ring-0 focus-visible:ring-offset-0"
                           placeholder="Email или телефон"
-                          data-oid="vmnj3t8"
+                          className="h-14 rounded-2xl border-white/10 bg-white/[0.03] px-5 text-base text-[#f5f5f5] placeholder:text-[#c0c0c0]/35 focus-visible:ring-[#cd7f32]/35"
                         />
                       </FormControl>
-                      <FormMessage data-oid="81_uzt6" />
+                      <FormMessage />
                     </FormItem>
                   )}
-                  data-oid="3q.87z3"
                 />
 
                 <FormField
                   control={form.control}
                   name="message"
                   render={({ field }) => (
-                    <FormItem data-oid="i2y:_t6">
-                      <FormLabel
-                        className="text-sm font-light text-foreground/60 tracking-wide"
-                        data-oid="2ohjnub"
-                      >
-                        СООБЩЕНИЕ
+                    <FormItem>
+                      <FormLabel className="text-xs uppercase tracking-[0.28em] text-[#c0c0c0]/55">
+                        Задача
                       </FormLabel>
-                      <FormControl data-oid="lr1ii_a">
+                      <FormControl>
                         <Textarea
                           {...field}
-                          className="bg-transparent border-0 border-b border-foreground/20 focus:border-foreground rounded-none px-0 py-4 text-lg font-light min-h-[120px] resize-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                          placeholder="Опишите ваш проект"
-                          data-oid="_-48tn4"
+                          placeholder="Опишите помещение, желаемую мебель, материалы и ориентир по срокам."
+                          className="min-h-[168px] rounded-[1.5rem] border-white/10 bg-white/[0.03] px-5 py-4 text-base leading-7 text-[#f5f5f5] placeholder:text-[#c0c0c0]/35 focus-visible:ring-[#cd7f32]/35"
                         />
                       </FormControl>
-                      <FormMessage data-oid="hx9k3-w" />
+                      <FormMessage />
                     </FormItem>
                   )}
-                  data-oid="_f8lae-"
                 />
 
                 <Button
                   type="submit"
-                  className="text-sm font-light text-foreground border border-foreground/20 px-8 py-3 hover:bg-foreground hover:text-background transition-all duration-500 tracking-wide bg-transparent"
                   disabled={isSubmitting}
-                  data-oid="9f6a26a"
+                  className="bronze-button h-auto w-full gap-3 py-4"
                 >
-                  {isSubmitting ? "Отправка..." : "Отправить"}
+                  {isSubmitting ? "Отправка..." : "Отправить запрос"}
+                  <ArrowUpRight className="h-4 w-4" />
                 </Button>
               </form>
             </Form>
           </motion.div>
-
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="flex flex-col justify-center space-y-12"
-            data-oid="nge:jnw"
-          >
-            <div className="space-y-8" data-oid="y_4axtj">
-              <div data-oid="jlbave4">
-                <h3
-                  className="text-sm font-light text-foreground/60 tracking-wide mb-3"
-                  data-oid="7_k6wtl"
-                >
-                  EMAIL
-                </h3>
-                <a
-                  href="mailto:contact@form-eng.com"
-                  className="text-lg font-light text-foreground hover:text-foreground/70 transition-colors"
-                  data-oid="jzex-8."
-                >
-                  contact@form-eng.com
-                </a>
-              </div>
-
-              <div data-oid="ip_v2dc">
-                <h3
-                  className="text-sm font-light text-foreground/60 tracking-wide mb-3"
-                  data-oid="gbwytk8"
-                >
-                  ТЕЛЕФОН
-                </h3>
-                <a
-                  href="tel:+74951234567"
-                  className="text-lg font-light text-foreground hover:text-foreground/70 transition-colors"
-                  data-oid="zj:-3pv"
-                >
-                  +7 (495) 123-45-67
-                </a>
-              </div>
-
-              <div data-oid="9e0fkxq">
-                <h3
-                  className="text-sm font-light text-foreground/60 tracking-wide mb-3"
-                  data-oid="tr.3oqz"
-                >
-                  АДРЕС
-                </h3>
-                <p
-                  className="text-lg font-light text-foreground"
-                  data-oid="bx4dmnj"
-                >
-                  Москва, Проектируемый проезд, 1
-                </p>
-              </div>
-            </div>
-
-            <div
-              className="pt-8 border-t border-foreground/10"
-              data-oid="myaclrq"
-            >
-              <p
-                className="text-base font-light text-foreground/50 leading-relaxed"
-                data-oid="_wfzu9z"
-              >
-                Мы открыты для сотрудничества с архитекторами, дизайнерами и
-                частными заказчиками.
-              </p>
-            </div>
-          </motion.div>
         </div>
       </div>
 
-      {/* Success Dialog */}
-      <Dialog
-        open={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-        data-oid="m4d0s9w"
-      >
-        <DialogContent
-          className="bg-card border-border/50 max-w-md"
-          data-oid="qq91z:k"
-        >
-          <DialogHeader data-oid="e3wqga9">
-            <DialogTitle className="text-xl font-light" data-oid=":6i2oqm">
-              Спасибо!
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-md rounded-[1.8rem] border border-white/10 bg-[#0a0a0a] text-[#f5f5f5]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-semibold tracking-[-0.04em]">
+              Запрос принят
             </DialogTitle>
-            <DialogDescription
-              className="text-foreground/70 pt-2"
-              data-oid="hfx_98k"
-            >
-              Ваше обращение отправлено. Мы свяжемся с вами в ближайшее время.
+            <DialogDescription className="pt-2 text-sm leading-7 text-[#c0c0c0]/72">
+              Мы получили ваш бриф и свяжемся в ближайшее время, чтобы обсудить
+              материалы, сроки и формат производства.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex justify-end" data-oid="r44hjc:">
-            <Button
-              onClick={() => setIsDialogOpen(false)}
-              className="text-sm font-light text-foreground border border-foreground/20 px-6 py-2 hover:bg-foreground hover:text-background transition-all duration-300 bg-transparent"
-              data-oid="lde:m_1"
-            >
-              Закрыть
-            </Button>
-          </div>
+          <Button
+            onClick={() => setIsDialogOpen(false)}
+            className="bronze-button mt-2 h-auto w-full py-3"
+          >
+            Закрыть
+          </Button>
         </DialogContent>
       </Dialog>
     </section>

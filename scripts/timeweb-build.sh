@@ -20,7 +20,7 @@ else
 fi
 
 # Ensure esbuild binary matches the expected version from the workspace lockfile
-npm install esbuild@0.25.8 --no-save --package-lock=false
+npm install esbuild@0.25.12 --no-save --package-lock=false
 
 npm run build
 
