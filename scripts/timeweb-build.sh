@@ -6,28 +6,36 @@ APP_ROOT="${PROJECT_ROOT}/webapp-pure-form-7dzsf1"
 APP_DIST_DIR="${APP_ROOT}/apps/website/dist"
 OUTPUT_DIR="${PROJECT_ROOT}/dist"
 
-ensure_bun() {
-  if command -v bun >/dev/null 2>&1; then
-    return
-  fi
+build_with_bun() {
+  echo "Installing workspace dependencies with Bun..."
+  cd "${PROJECT_ROOT}"
+  bun install --frozen-lockfile
 
-  echo "Bun is not installed. Installing Bun..."
-  curl -fsSL https://bun.sh/install | bash
-  export BUN_INSTALL="${HOME}/.bun"
-  export PATH="${BUN_INSTALL}/bin:${PATH}"
+  echo "Building website for Timeweb with Bun..."
+  VITE_BASE_PATH=/ bun run build:website
 }
 
-ensure_bun
+build_with_npm() {
+  if [[ ! -d "${PROJECT_ROOT}/node_modules" ]]; then
+    echo "Root node_modules are missing. Installing dependencies with npm..."
+    cd "${PROJECT_ROOT}"
+    npm install
+  fi
+
+  echo "Bun is unavailable. Building website for Timeweb with npx..."
+  cd "${APP_ROOT}/apps/website"
+  npx tsc -b
+  VITE_BASE_PATH=/ npx vite build
+}
 
 echo "Cleaning nested workspace node_modules to avoid mixed React type resolution..."
 rm -rf "${APP_ROOT}/node_modules" "${APP_ROOT}/apps/website/node_modules"
 
-echo "Installing workspace dependencies with Bun..."
-cd "${PROJECT_ROOT}"
-bun install --frozen-lockfile
-
-echo "Building website for Timeweb..."
-VITE_BASE_PATH=/ bun run build:website
+if command -v bun >/dev/null 2>&1; then
+  build_with_bun
+else
+  build_with_npm
+fi
 
 echo "Syncing build output to ${OUTPUT_DIR}..."
 rm -rf "${OUTPUT_DIR}"
