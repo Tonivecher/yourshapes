@@ -1,15 +1,16 @@
 import { useEffect, useState, lazy, Suspense } from "react";
-import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SmoothScroll } from "@/components/SmoothScroll";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const Footer = lazy(() => import("@/components/Footer"));
 const Home = lazy(() => import("./pages/Home"));
 const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 
-const queryClient = new QueryClient();
+const routerBasename =
+  import.meta.env.BASE_URL && import.meta.env.BASE_URL !== "/"
+    ? import.meta.env.BASE_URL.replace(/\/$/, "")
+    : "/";
 
 const Preloader = () => (
   <div
@@ -45,39 +46,36 @@ const App = () => {
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient} data-oid="11x3dan">
-      <TooltipProvider data-oid="rxrwrb:">
-        <Toaster data-oid="cx_rdvp" />
-        {isLoading ? (
-          <Preloader data-oid="emwir-n" />
-        ) : (
-          <SmoothScroll>
-            <BrowserRouter basename="/" data-oid="m5jx87.">
-              <Suspense fallback={null} data-oid="9jpwlz_">
-                <Routes data-oid="0n9-e.j">
-                  <Route
-                    path="/"
-                    element={
-                      <>
-                        <Home data-oid="40ovcfe" />
-                        <Footer data-oid="vej_oor" />
-                      </>
-                    }
-                    data-oid="nya6bf3"
-                  />
+    <TooltipProvider data-oid="rxrwrb:">
+      {isLoading ? (
+        <Preloader data-oid="emwir-n" />
+      ) : (
+        <SmoothScroll>
+          <BrowserRouter basename={routerBasename} data-oid="m5jx87.">
+            <Suspense fallback={null} data-oid="9jpwlz_">
+              <Routes data-oid="0n9-e.j">
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <Home data-oid="40ovcfe" />
+                      <Footer data-oid="vej_oor" />
+                    </>
+                  }
+                  data-oid="nya6bf3"
+                />
 
-                  <Route
-                    path="*"
-                    element={<ErrorPage data-oid="49s.j6m" />}
-                    data-oid="w9h:ql2"
-                  />
-                </Routes>
-              </Suspense>
-            </BrowserRouter>
-          </SmoothScroll>
-        )}
-      </TooltipProvider>
-    </QueryClientProvider>
+                <Route
+                  path="*"
+                  element={<ErrorPage data-oid="49s.j6m" />}
+                  data-oid="w9h:ql2"
+                />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </SmoothScroll>
+      )}
+    </TooltipProvider>
   );
 };
 

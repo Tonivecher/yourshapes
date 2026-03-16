@@ -17,9 +17,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: webapp-pure-form-7dzsf1/apps/website
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,26 +27,30 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
       - name: Install dependencies
+        working-directory: webapp-pure-form-7dzsf1
         run: bun install --frozen-lockfile
 
       - name: Build
-        run: bun run build
+        working-directory: webapp-pure-form-7dzsf1
+        run: bun run build:website
         env:
           CI: false
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
 
       - name: Verify dist
+        working-directory: webapp-pure-form-7dzsf1
         run: |
-          test -d dist || (echo "::error::dist не создан"; exit 1)
-          ls -la dist
+          test -d apps/website/dist || (echo "::error::apps/website/dist не создан"; exit 1)
+          ls -la apps/website/dist
 
-      # Линт после сборки и НЕ фейлит джобу
-      - name: Lint (non-blocking)
-        run: bun run lint || true
+      - name: Lint
+        working-directory: webapp-pure-form-7dzsf1/apps/website
+        run: bun run lint
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
