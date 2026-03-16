@@ -32,21 +32,18 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        working-directory: webapp-pure-form-7dzsf1
         run: bun install --frozen-lockfile
 
       - name: Build
-        working-directory: webapp-pure-form-7dzsf1
         run: bun run build:website
         env:
           CI: false
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
 
       - name: Verify dist
-        working-directory: webapp-pure-form-7dzsf1
         run: |
-          test -d apps/website/dist || (echo "::error::apps/website/dist не создан"; exit 1)
-          ls -la apps/website/dist
+          test -d webapp-pure-form-7dzsf1/apps/website/dist || (echo "::error::webapp-pure-form-7dzsf1/apps/website/dist не создан"; exit 1)
+          ls -la webapp-pure-form-7dzsf1/apps/website/dist
 
       - name: Lint
         working-directory: webapp-pure-form-7dzsf1/apps/website
