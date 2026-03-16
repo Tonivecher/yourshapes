@@ -266,7 +266,7 @@ dist/
 
 ### Deployment Options
 
-1. **Static Hosting** (Vercel, Netlify, GitHub Pages)
+1. **Static Hosting** (Vercel, Netlify)
    - Deploy the `apps/website/dist/` directory
    - Set build command: `bun run build:website`
    - Set output directory: `apps/website/dist`
@@ -283,8 +283,8 @@ dist/
 4. **Timeweb Cloud**
    - В настройках деплоя укажите команду сборки: `bash scripts/timeweb-build.sh`
    - В разделе «Зависимости» перечислите системные пакеты: `curl ca-certificates unzip`
-   - Директория сборки: `webapp-pure-form-7dzsf1/apps/website/dist`
-   - Скрипт устанавливает Bun через официальный инсталлер и запускает `bun run build:website`, поэтому дополнительных ручных шагов не требуется
+   - Директория сборки: `dist`
+   - Скрипт при необходимости устанавливает Bun, затем запускает `bun install --frozen-lockfile`, собирает сайт и копирует итоговый build в корневую директорию `dist`, поэтому для Timeweb не нужен вложенный путь до артефактов
 
 ## 🐛 Troubleshooting
 
