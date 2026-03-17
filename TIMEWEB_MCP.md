@@ -17,6 +17,12 @@ This repository includes a helper script for launching the experimental [Timeweb
 
 > The `.env.timeweb` file is ignored by Git to prevent accidental leaks of credentials.
 
+## VS Code Workspace Configuration
+
+This repository includes a workspace MCP config at `.vscode/mcp.json`. It launches `timeweb-mcp-server` through `npx` and loads credentials from `.env.timeweb`, so the token does not need to be committed to the repository.
+
+If you use VS Code, create `.env.timeweb` first and then reload the window so the MCP server can start with the token available.
+
 ## Usage
 
 Start the server from the repository root:
