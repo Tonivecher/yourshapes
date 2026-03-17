@@ -7,8 +7,8 @@ APP_DIST_DIR="${APP_ROOT}/apps/website/dist"
 OUTPUT_DIR="${PROJECT_ROOT}/dist"
 
 build_with_bun() {
-  echo "Installing workspace dependencies with Bun..."
-  cd "${PROJECT_ROOT}"
+  echo "Installing website dependencies with Bun..."
+  cd "${APP_ROOT}"
   bun install --frozen-lockfile
 
   echo "Building website for Timeweb with Bun..."
@@ -16,16 +16,12 @@ build_with_bun() {
 }
 
 build_with_npm() {
-  if [[ ! -d "${PROJECT_ROOT}/node_modules" ]]; then
-    echo "Root node_modules are missing. Installing dependencies with npm..."
-    cd "${PROJECT_ROOT}"
-    npm install
-  fi
-
-  echo "Bun is unavailable. Building website for Timeweb with npx..."
+  echo "Installing website dependencies with npm..."
   cd "${APP_ROOT}/apps/website"
-  npx tsc -b
-  VITE_BASE_PATH=/ npx vite build
+  npm install --no-audit --no-fund
+
+  echo "Bun is unavailable. Building website for Timeweb with npm..."
+  VITE_BASE_PATH=/ npm run build
 }
 
 echo "Cleaning nested workspace node_modules to avoid mixed React type resolution..."
